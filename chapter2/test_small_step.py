@@ -1,7 +1,11 @@
 from unittest import TestCase
+from nose.tools import eq_
+
+from small_step import Number
 
 
-class SetupTests(TestCase):
+class NumberTests(TestCase):
 
-    def test_nothing_at_all(self):
-        self.assertTrue(True)
+    def test_not_reducible(self):
+        number = Number(1)
+        eq_(number.is_reducible(), False)
