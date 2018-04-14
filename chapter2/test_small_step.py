@@ -18,13 +18,26 @@ class NumberTests(TestCase):
         number = Number(1)
         eq_(str(number), '«1»')
 
+    def test_numbers_equal(self):
+        eq_(Number(1), Number(1))
+
+    def test_numbers_not_equal(self):
+        self.assertNotEqual(Number(1), Number(2))
+
 
 class AddTests(TestCase):
+    def setUp(self):
+        self.number1 = Number(1)
+        self.number2 = Number(2)
 
     def test_repr(self):
-        number1 = Number(1)
-        number2 = Number(2)
-
-        add = Add(number1, number2)
-
+        add = Add(self.number1, self.number2)
         eq_(str(add), '«1 + 2»')
+
+    def test_add_is_reducible(self):
+        add = Add(self.number1, self.number2)
+        eq_(add.is_reducible(), True)
+
+    def test_1_plus_2_reduces_to_3(self):
+        add = Add(self.number1, self.number2)
+        eq_(add.reduce(), Number(3))
