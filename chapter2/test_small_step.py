@@ -41,3 +41,9 @@ class AddTests(TestCase):
     def test_1_plus_2_reduces_to_3(self):
         add = Add(self.number1, self.number2)
         eq_(add.reduce(), Number(3))
+
+    def test_add_reduces_add_expressions(self):
+        add = Add(self.number1,
+                Add(self.number2, self.number2)
+                )
+        eq_(add.reduce(), Number(4))
