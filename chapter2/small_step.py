@@ -2,6 +2,9 @@ class ExpressionMixin:
     def __repr__(self):
         return f'«{self.clean_repr}»'
 
+    def get_reduced(self):
+        return self.reduce() if self.is_reducible() else self
+
 
 class Number(ExpressionMixin):
 
@@ -26,7 +29,8 @@ class Add(ExpressionMixin):
         self.right = right
 
     def reduce(self):
-        return Number(self.left.value + self.right.value)
+        return Number(
+            self.left.get_reduced().value + self.right.get_reduced().value)
 
     @property
     def clean_repr(self):
